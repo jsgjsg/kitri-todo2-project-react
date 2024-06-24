@@ -1,57 +1,59 @@
 import './App.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 import TodoInput from './components/TodoInput'
 import TodoList from './components/TodoList'
 
 function App() {
 
-  const [todos, setTodos] = useState([{
-    id: 1,
-    completed: true,
-    title: "리액트 공부하기"
-  },
-  {
-    id: 2,
-    completed: false,
-    title: "축구 연습하기"
-	}]);
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/todos')
+      .then(res => setTodos(res.data))
+      .catch(err => {
+        console.error('Error occurred on fetching', err);
+      })
+  }, []);
 
   function addTodo(newTodo) {
-    console.log(newTodo.title);
     if(newTodo.title == '') {
       alert("내용 입력");
       return;
     }
-    setTodos([...todos, {
-      id: todos[0] ? todos[todos.length - 1].id + 1 : 1,
-      completed: newTodo.completed,
-      title: newTodo.title
-    }]);
+    axios.post('http://localhost:3001/todos', newTodo)
+    .then(res => {
+      setTodos([...todos, res.data]);
+    })
+    .catch(err => {
+      console.error('Error occurred on fetching', err);
+    });
   }
 
   function delTodo(rmTodo) {
-    setTodos(todos.filter((todo) => {
-      return todo.id != rmTodo.id;
-    }))
+    // 뒤에 id 붙이기
+    axios.delete(`http://localhost:3001/todos/${rmTodo.id}`)
+    .then(res => setTodos(todos.filter((todo) => {
+      return todo.id != res.data.id;
+    })))
+    .catch(err => {
+      console.error('Error occurred on fetching', err);
+    });
   }
 
-  function modCompleted(modTodo) {
-    setTodos(todos.map((todo) => {
-      if(todo.id == modTodo.id) return modTodo;
-      else return todo;
-    }))
-  }
-
-  function modTitle(modTodo) {
+  function updateTodo(modTodo) {
     if(modTodo.title == '') {
       alert("내용 입력");
       return;
     }
-    setTodos(todos.map((todo) => {
-      if(todo.id == modTodo.id) return modTodo;
+
+    axios.put(`http://localhost:3001/todos/${modTodo.id}`, modTodo)
+    .then(res => setTodos(todos.map((todo) => {
+      if(todo.id == res.data.id) return res.data;
       else return todo;
-    }))
+    })));
   }
 
   return (
@@ -66,8 +68,7 @@ function App() {
         <TodoList
           todos = {todos}
           delTodo = {delTodo}
-          modCompleted = {modCompleted}
-          modTitle = {modTitle}
+          updateTodo = {updateTodo}
         />
       </div>
     </div>

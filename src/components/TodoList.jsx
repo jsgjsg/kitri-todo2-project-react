@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({todos, delTodo, modCompleted, modTitle}) {
+function TodoList({todos, delTodo, updateTodo}) {
   return (
     <ul>
       {todos.map((todo) => {
@@ -8,8 +8,7 @@ function TodoList({todos, delTodo, modCompleted, modTitle}) {
                 key={todo.id}
                 todo = {todo}
                 delTodo = {delTodo}
-                modCompleted = {modCompleted}
-                modTitle = {modTitle}
+                updateTodo = {updateTodo}
               />
       })}
     </ul>
