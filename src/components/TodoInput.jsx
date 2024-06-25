@@ -1,17 +1,16 @@
 import { useRef } from "react";
 import { FiPlus } from "react-icons/fi";
 
-function TodoInput({todos, addTodo}) {
-
+function TodoInput({ todos, addTodo }) {
   const inputRef = useRef(null);
 
   function buttonClick() {
     const newTodo = {
       completed: false,
-      title: inputRef.current.value
-    }
+      title: inputRef.current.value,
+    };
     addTodo(newTodo);
-    inputRef.current.value = '';
+    inputRef.current.value = "";
   }
 
   return (
@@ -30,7 +29,7 @@ function TodoInput({todos, addTodo}) {
         <FiPlus size={20} />
       </button>
     </form>
-  )
+  );
 }
 
 export default TodoInput;
