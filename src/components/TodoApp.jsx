@@ -68,11 +68,11 @@ function TodoApp() {
     });
 
     axiosInstance
-      .delete(`/${rmTodo.id}`)
+      .delete(`/${rmTodo._id}`)
       .then((res) =>
         setTodos(
           todos.filter((todo) => {
-            return todo.id !== res.data.id;
+            return todo._id !== res.data._id;
           })
         )
       )
@@ -99,12 +99,14 @@ function TodoApp() {
       return;
     }
 
+    console.log(modTodo);
+
     axiosInstance
-      .put(`/${modTodo.id}`, modTodo)
+      .put(`/${modTodo._id}`, modTodo)
       .then((res) =>
         setTodos(
           todos.map((todo) => {
-            if (todo.id === res.data.id) return res.data;
+            if (todo._id === res.data._id) return res.data;
             else return todo;
           })
         )
