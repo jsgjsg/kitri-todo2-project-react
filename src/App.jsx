@@ -1,85 +1,48 @@
-import "./App.css";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-import TodoInput from "./components/TodoInput";
-import TodoList from "./components/TodoList";
-import Login from "./components/loing";
+import Login from "./components/Login";
+import Calender from "./components/Calender";
+import SignUp from "./components/SignUp";
+import TodoApp from "./components/TodoApp";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [setTodos] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:3001/todos")
       .then((res) => setTodos(res.data))
       .catch((err) => {
-        console.error("Error occurred on fetching", err);
+        console.error("불러오기 중 오류 발생", err);
       });
   }, []);
 
-  function addTodo(newTodo) {
-    if (newTodo.title == "") {
-      alert("내용 입력");
-      return;
-    }
-    axios
-      .post("http://localhost:3001/todos", newTodo)
-      .then((res) => {
-        setTodos([...todos, res.data]);
-      })
-      .catch((err) => {
-        console.error("Error occurred on fetching", err);
-      });
-  }
-
-  function delTodo(rmTodo) {
-    // 뒤에 id 붙이기
-    axios
-      .delete(`http://localhost:3001/todos/${rmTodo.id}`)
-      .then((res) =>
-        setTodos(
-          todos.filter((todo) => {
-            return todo.id != res.data.id;
-          })
-        )
-      )
-      .catch((err) => {
-        console.error("Error occurred on fetching", err);
-      });
-  }
-
-  function updateTodo(modTodo) {
-    if (modTodo.title == "") {
-      alert("내용 입력");
-      return;
-    }
-
-    axios
-      .put(`http://localhost:3001/todos/${modTodo.id}`, modTodo)
-      .then((res) =>
-        setTodos(
-          todos.map((todo) => {
-            if (todo.id == res.data.id) return res.data;
-            else return todo;
-          })
-        )
-      );
-  }
-
   return (
-    <div className="bg-blue-200 min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <div className="flex items-center justify-center mb-6">
-          <h1 className="text-4xl font-bold text-black-600 ml-2">Todo list</h1>
-        </div>
-        <TodoInput todos={todos} addTodo={addTodo} />
-        <TodoList todos={todos} delTodo={delTodo} updateTodo={updateTodo} />
+    <Router>
+      <div className="flex justify-between mb-4">
+        <Link to="/login" className="text-blue-600 hover:underline">
+          로그인
+        </Link>
+        <Link to="/signup" className="text-blue-600 hover:underline">
+          회원가입
+        </Link>
+        <Link to="/calendar" className="text-blue-600 hover:underline">
+          달력
+        </Link>
+        <Link to="/" className="text-blue-600 hover:underline">
+          메인 화면
+        </Link>
       </div>
-    </div>
-    // <div className="App">
-    //   <Login />
-    // </div>
+
+      <Routes>
+        <Route path="/" element={<TodoApp />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/calendar" element={<Calender />} />
+      </Routes>
+    </Router>
   );
 }
 
