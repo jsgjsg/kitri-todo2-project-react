@@ -1,21 +1,33 @@
+// src/SignUp.js
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     if (password !== confirmPassword) {
       alert("Passwords do not match");
       return;
     }
-    // 여기에서 회원가입 요청을 서버로 보내는 로직을 추가합니다.
-    console.log("Email:", email);
-    console.log("Password:", password);
-    console.log("Confirm Password:", confirmPassword);
-    // 이후에 서버로 요청을 보내는 코드를 작성하면 됩니다.
+
+    try {
+      const response = await axios.post("http://localhost:3000/api/auth/join", {
+        email,
+        password,
+      });
+      console.log("Sign up successful:", response.data);
+      alert("Sign up successful!");
+      navigate("/login"); // 로그인 페이지로 이동
+    } catch (error) {
+      console.error("Sign up failed:", error);
+      alert("email 중복");
+    }
   };
 
   return (

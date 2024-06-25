@@ -1,14 +1,17 @@
-// src/Calendar.js
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ko"; // Import Korean locale
+import Modal from "react-modal";
+import TodoApp from "./TodoApp";
 
 dayjs.locale("ko"); // Set locale globally
 
-const Calender = () => {
+const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const [selectedYear, setSelectedYear] = useState(currentMonth.year());
   const [selectedMonth, setSelectedMonth] = useState(currentMonth.month() + 1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const handleYearChange = (e) => {
     setSelectedYear(parseInt(e.target.value));
@@ -46,8 +49,8 @@ const Calender = () => {
   };
 
   const handleDateClick = (day) => {
-    console.log("Clicked date:", day.format("YYYY-MM-DD"));
-    // 여기에 클릭한 날짜에 대한 추가 처리를 할 수 있습니다.
+    setSelectedDate(day.format("YYYY-MM-DD"));
+    setIsModalOpen(true);
   };
 
   const generateCalendar = () => {
@@ -141,8 +144,30 @@ const Calender = () => {
           </React.Fragment>
         ))}
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        contentLabel="ToDo Modal"
+        className="modal-wrapper"
+        overlayClassName="modal-overlay"
+      >
+        <div className="modal-content">
+          <div className="flex justify-end mb-2">
+            <button
+              onClick={() => setIsModalOpen(false)}
+              className="text-gray-500 hover:text-gray-800 focus:outline-none"
+            >
+              닫기
+            </button>
+          </div>
+          <h2 className="text-xl font-bold mb-4">
+            ToDo List for {selectedDate}
+          </h2>
+          <TodoApp selectedDate={selectedDate} />
+        </div>
+      </Modal>
     </div>
   );
 };
 
-export default Calender;
+export default Calendar;

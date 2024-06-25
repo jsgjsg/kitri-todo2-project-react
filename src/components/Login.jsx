@@ -1,15 +1,32 @@
-// src/Login.js
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // 여기에서 로그인 요청을 서버로 보내는 로직을 추가합니다.
-    console.log("Email:", email);
-    console.log("Password:", password);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        {
+          email,
+          password,
+        }
+      );
+
+      // 로그인 성공 시 받아온 액세스 토큰을 localStorage에 저장
+      localStorage.setItem("accessToken", response.data.accessToken);
+
+      alert("Login successful!");
+      navigate("/"); // 메인 화면으로 이동
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Login failed, please try again.");
+    }
   };
 
   return (
