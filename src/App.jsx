@@ -1,5 +1,3 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import Login from "./components/Login";
@@ -8,17 +6,6 @@ import SignUp from "./components/SignUp";
 import TodoApp from "./components/TodoApp";
 
 function App() {
-  const [setTodos] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:3001/todos")
-      .then((res) => setTodos(res.data))
-      .catch((err) => {
-        console.error("불러오기 중 오류 발생", err);
-      });
-  }, []);
-
   return (
     <Router>
       <div className="flex justify-between mb-4">
