@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ko"; // Import Korean locale
-import Modal from "react-modal";
-import TodoApp from "./TodoApp";
+import { useNavigate } from "react-router-dom";
+import TodoListPage from "./TodoListPage"; // Import TodoListPage
 
 dayjs.locale("ko"); // Set locale globally
 
@@ -10,8 +10,9 @@ const Calendar = () => {
   const [currentMonth, setCurrentMonth] = useState(dayjs());
   const [selectedYear, setSelectedYear] = useState(currentMonth.year());
   const [selectedMonth, setSelectedMonth] = useState(currentMonth.month() + 1);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const [showTodoModal, setShowTodoModal] = useState(false); // Add state for showing modal
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   const handleYearChange = (e) => {
     setSelectedYear(parseInt(e.target.value));
@@ -50,7 +51,7 @@ const Calendar = () => {
 
   const handleDateClick = (day) => {
     setSelectedDate(day.format("YYYY-MM-DD"));
-    setIsModalOpen(true);
+    setShowTodoModal(true); // Show modal on date click
   };
 
   const generateCalendar = () => {
@@ -144,28 +145,20 @@ const Calendar = () => {
           </React.Fragment>
         ))}
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
-        contentLabel="ToDo Modal"
-        className="modal-wrapper"
-        overlayClassName="modal-overlay"
-      >
-        <div className="modal-content">
-          <div className="flex justify-end mb-2">
+
+      {showTodoModal && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative">
             <button
-              onClick={() => setIsModalOpen(false)}
-              className="text-gray-500 hover:text-gray-800 focus:outline-none"
+              className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 absolute top-4 right-4"
+              onClick={() => setShowTodoModal(false)}
             >
-              닫기
+              X
             </button>
+            <TodoListPage selectedDate={selectedDate} />
           </div>
-          <h2 className="text-xl font-bold mb-4">
-            ToDo List for {selectedDate}
-          </h2>
-          <TodoApp selectedDate={selectedDate} />
         </div>
-      </Modal>
+      )}
     </div>
   );
 };
