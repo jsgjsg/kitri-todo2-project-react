@@ -12,7 +12,7 @@ function TodoApp() {
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:3001", // Express 서버의 주소
+      baseURL: "http://localhost:3000", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
         "Content-Type": "application/json",
@@ -20,8 +20,12 @@ function TodoApp() {
     });
 
     axiosInstance
-      .get("http://localhost:3000/api/todos")
-      .then((res) => setTodos(res.data))
+      .get("/api/todos")
+      .then((res) => {
+        const fixO = res.data.filter((todo) => todo.fixOX == true);
+        const fixX = res.data.filter((todo) => todo.fixOX == false);
+        setTodos([...fixO, ...fixX]);
+      })
       .catch((err) => {
         console.error("불러오기 중 오류 발생", err);
       });
