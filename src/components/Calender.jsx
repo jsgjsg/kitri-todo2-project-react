@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import "dayjs/locale/ko"; // Import Korean locale
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,18 @@ const Calendar = () => {
   const [selectedMonth, setSelectedMonth] = useState(currentMonth.month() + 1);
   const [selectedDate, setSelectedDate] = useState(null);
   const [showTodoModal, setShowTodoModal] = useState(false); // Add state for showing modal
+  const [todos, setTodos] = useState([]); // 투두리스트 데이터를 위한 state 추가
   const navigate = useNavigate(); // useNavigate 훅 사용
+
+  // 투두리스트 데이터 가져오는 함수
+  useEffect(() => {
+    // 여기서 실제 API 호출 등을 통해 데이터를 가져올 수 있습니다.
+    const fetchedTodos = [
+      { id: 1, title: "Sample Todo 1", dueDate: "2024-06-10" },
+      { id: 2, title: "Sample Todo 2", dueDate: "2024-06-15" },
+    ];
+    setTodos(fetchedTodos);
+  }, []);
 
   const handleYearChange = (e) => {
     setSelectedYear(parseInt(e.target.value));
@@ -75,6 +86,11 @@ const Calendar = () => {
 
   const today = dayjs();
 
+  // 투두리스트가 있는 날짜 확인 함수
+  const hasTodo = (date) => {
+    return todos.some((todo) => todo.dueDate === date.format("YYYY-MM-DD"));
+  };
+
   return (
     <div className="p-8 max-w-5xl mx-auto bg-white rounded-lg shadow-lg">
       <div className="flex justify-between items-center mb-6">
@@ -134,6 +150,8 @@ const Calendar = () => {
                   day.isSame(currentMonth, "month")
                     ? today.isSame(day, "day")
                       ? "bg-white-200 text-black-800 shadow-md border-4 border-red-500"
+                      : hasTodo(day)
+                      ? "bg-green-100 text-black-800 shadow-md" // 투두리스트가 있는 날짜 스타일
                       : "bg-white shadow-md hover:bg-gray-100"
                     : "bg-gray-100 text-gray-400"
                 }`}
@@ -159,6 +177,12 @@ const Calendar = () => {
           </div>
         </div>
       )}
+      <button
+        onClick={() => navigate("/")}
+        className="bg-blue-500 text-white text-center px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300"
+      >
+        Todo-list
+      </button>
     </div>
   );
 };
