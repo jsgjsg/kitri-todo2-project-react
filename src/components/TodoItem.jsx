@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FiEdit2, FiTrash2, FiCheck, FiX } from "react-icons/fi";
 
 function TodoItem({ todo, delTodo, updateTodo }) {
@@ -13,7 +13,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
   // line-through
   if (!isModify)
     return (
-      <li className="flex justify-between items-center bg-gray-100 p-4 my-2 rounded-lg shadow-md">
+      <li className="flex justify-between items-center bg-gray-500 p-4 my-2 rounded-lg shadow-md">
         <span
           onClick={() => {
             updateTodo({ ...todo, completed: !completed });

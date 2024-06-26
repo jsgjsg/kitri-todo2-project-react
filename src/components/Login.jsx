@@ -20,6 +20,7 @@ const Login = () => {
 
       // 로그인 성공 시 받아온 액세스 토큰을 localStorage에 저장
       localStorage.setItem("accessToken", response.data.accessToken);
+      localStorage.setItem("refreshToken", response.data.refreshToken);
 
       alert("Login successful!");
       navigate("/"); // 메인 화면으로 이동
