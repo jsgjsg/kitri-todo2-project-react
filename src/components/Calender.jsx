@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko"; // Import Korean locale
 import { useNavigate } from "react-router-dom";
 import TodoListPage from "./TodoListPage"; // Import TodoListPage
+import axios from "axios";
 
 dayjs.locale("ko"); // Set locale globally
 
@@ -15,14 +16,27 @@ const Calendar = () => {
   const [todos, setTodos] = useState([]); // 투두리스트 데이터를 위한 state 추가
   const navigate = useNavigate(); // useNavigate 훅 사용
 
+  const accessToken = localStorage.getItem("accessToken");
+  const axiosInstance = axios.create({
+    baseURL: "http://localhost:3000", // Express 서버의 주소
+    headers: {
+      Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
+      "Content-Type": "application/json",
+    },
+  });
+
   // 투두리스트 데이터 가져오는 함수
   useEffect(() => {
     // 여기서 실제 API 호출 등을 통해 데이터를 가져올 수 있습니다.
-    const fetchedTodos = [
-      { id: 1, title: "Sample Todo 1", dueDate: "2024-06-10" },
-      { id: 2, title: "Sample Todo 2", dueDate: "2024-06-15" },
-    ];
-    setTodos(fetchedTodos);
+    axiosInstance
+      .get(`/api/todos/hasDate`)
+      .then((res) => {
+        console.log(res);
+        setTodos(res.data);
+      })
+      .catch((err) => {
+        console.error("불러오기 중 오류 발생", err);
+      });
   }, []);
 
   const handleYearChange = (e) => {
@@ -88,7 +102,7 @@ const Calendar = () => {
 
   // 투두리스트가 있는 날짜 확인 함수
   const hasTodo = (date) => {
-    return todos.some((todo) => todo.dueDate === date.format("YYYY-MM-DD"));
+    return todos.some((todo) => todo === date.format("YYYY-MM-DD"));
   };
 
   return (
@@ -151,9 +165,9 @@ const Calendar = () => {
                     ? today.isSame(day, "day")
                       ? "bg-white-200 text-black-800 shadow-md border-4 border-red-500"
                       : hasTodo(day)
-                      ? "bg-green-100 text-black-800 shadow-md" // 투두리스트가 있는 날짜 스타일
-                      : "bg-white shadow-md hover:bg-gray-100"
-                    : "bg-gray-100 text-gray-400"
+                      ? "bg-purple-200 text-black-800 shadow-md transform hover:scale-110 transition-transform" // 투두리스트가 있는 날짜 스타일
+                      : "bg-white shadow-md hover:bg-gray-200" // 투두리스트가 없는 날짜 스타일
+                    : "bg-gray-100 text-gray-400" // 이번달 아닌날 스타일
                 }`}
                 onClick={() => handleDateClick(day)}
               >
