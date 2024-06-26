@@ -5,6 +5,7 @@ import TodoList from "./TodoList";
 import { useNavigate } from "react-router-dom";
 
 function TodoApp() {
+  const [deadlineTodos, setDeadlineTodos] = useState([]);
   const [todos, setTodos] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false); // 모달 팝업 상태 관리
   const navigate = useNavigate(); // useNavigate 훅 사용
@@ -22,12 +23,39 @@ function TodoApp() {
       },
     });
 
-    axiosInstance
-      .get("/api/todos")
-      .then((res) => {
-        const fixO = res.data.filter((todo) => todo.fixOX == true);
-        const fixX = res.data.filter((todo) => todo.fixOX == false);
-        setTodos([...fixO, ...fixX]);
+    Promise.all([
+      axiosInstance.get("/api/todos"),
+      axiosInstance.get("/api/deadline"),
+    ])
+      .then(([todosres, deadlineres]) => {
+        // 당일 Todo
+        let fixO = todosres.data.filter((todo) => todo.fixOX == true);
+        let ascByDate1 = fixO.sort(
+          (a, b) =>
+            Number(a.dueDate.split("-").join("")) -
+            Number(b.dueDate.split("-").join(""))
+        );
+        let fixX = todosres.data.filter((todo) => todo.fixOX == false);
+        let ascByDate2 = fixX.sort(
+          (a, b) =>
+            Number(a.dueDate.split("-").join("")) -
+            Number(b.dueDate.split("-").join(""))
+        );
+        setTodos([...ascByDate1, ...ascByDate2]);
+        // 마감일이 있는 Todo
+        fixO = deadlineres.data.filter((todo) => todo.fixOX == true);
+        ascByDate1 = fixO.sort(
+          (a, b) =>
+            Number(a.dueDate.split("-").join("")) -
+            Number(b.dueDate.split("-").join(""))
+        );
+        fixX = deadlineres.data.filter((todo) => todo.fixOX == false);
+        ascByDate2 = fixX.sort(
+          (a, b) =>
+            Number(a.dueDate.split("-").join("")) -
+            Number(b.dueDate.split("-").join(""))
+        );
+        setDeadlineTodos([...ascByDate1, ...ascByDate2]);
       })
       .catch((err) => {
         console.error("불러오기 중 오류 발생", err);
