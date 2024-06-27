@@ -15,7 +15,7 @@ function TodoApp() {
   useEffect(() => {
     // 로컬 스토리지에서 액세스 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
-
+    if (!accessToken) navigate("/login");
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
       baseURL: "http://localhost:3000", // Express 서버의 주소
@@ -189,9 +189,9 @@ function TodoApp() {
             </h1>
             <button
               onClick={() => navigate("/calendar")}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 ml-2 hover:bg-blue-600 transition duration-300"
+              className="bg-green-500 text-white px-4 py-2 rounded-md mt-2 ml-2 hover:bg-green-600 transition duration-300"
             >
-              달력
+              📅 달력
             </button>
           </div>
           <div className="flex justify-between mb-4">
