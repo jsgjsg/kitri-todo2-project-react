@@ -16,7 +16,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
       <li className="flex justify-between items-center bg-gray-300 p-4 my-2 rounded-lg shadow-md">
         <span
           onClick={() => {
-            updateTodo({ ...todo, completed: !completed });
+            updateTodo({ ...todo, completed: !completed }, "/api/todos");
           }}
           ref={completedRef}
           className={`flex-grow ${completed ? "line-through" : ""}`}
@@ -35,7 +35,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
           </button>
           <button
             onClick={() => {
-              delTodo(todo);
+              delTodo(todo, "/api/todos");
             }}
             className="p-2 rounded-full shadow-md transition duration-300 bg-red-600 hover:bg-red-700 text-white"
           >
@@ -56,7 +56,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
         <div className="flex space-x-2">
           <button
             onClick={() => {
-              updateTodo({ ...todo, title: newTitle });
+              updateTodo({ ...todo, title: newTitle }, "/api/todos");
               setIsModify(!isModify);
             }}
             className="p-2 rounded-full shadow-md transition duration-300 bg-green-400 hover:bg-green-500 text-white"
