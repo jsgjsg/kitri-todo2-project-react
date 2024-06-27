@@ -8,7 +8,7 @@ import TodoListPage from "./components/TodoListPage";
 function App() {
   return (
     <Router>
-      <div className="flex justify-between mb-4">
+      {/* <div className="flex justify-between mb-4">
         <Link to="/login" className="text-blue-600 hover:underline">
           로그인
         </Link>
@@ -21,8 +21,7 @@ function App() {
         <Link to="/" className="text-blue-600 hover:underline">
           메인 화면
         </Link>
-      </div>
-
+      </div> */}
       <Routes>
         <Route path="/" element={<TodoApp />} />
         <Route path="/login" element={<Login />} />

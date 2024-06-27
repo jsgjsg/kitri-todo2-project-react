@@ -74,6 +74,14 @@ const Login = () => {
             Login
           </button>
         </form>
+        <div className="mt-4 text-center">
+          <button
+            onClick={() => navigate("/signup")} // 회원가입 페이지로 이동
+            className="text-indigo-600 w-full  px-4 py-2 border border-indigo-600 rounded-md shadow-sm hover:text-indigo-700"
+          >
+            SignUp
+          </button>
+        </div>
       </div>
     </div>
   );
