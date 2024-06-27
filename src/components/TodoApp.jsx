@@ -64,13 +64,13 @@ function TodoApp() {
       });
   }, []);
 
-  function addTodo(newTodo) {
+  function addTodo(newTodo, endpoint) {
     // 로컬 스토리지에서 액세스 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:3000/api/todos", // Express 서버의 주소
+      baseURL: "http://localhost:3000", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
         "Content-Type": "application/json",
@@ -83,51 +83,65 @@ function TodoApp() {
     }
 
     axiosInstance
-      .post("/", newTodo)
+      .post(endpoint, newTodo)
       .then((res) => {
-        setTodos([...todos, res.data]);
-        console.log(res.data);
-        // 추가 후 모달 닫기
-        setShowAddModal(false);
+        if (endpoint == "/api/todos") {
+          setTodos([...todos, res.data]);
+          console.log(res.data);
+          setShowAddModal(false);
+        } else {
+          setDeadlineTodos([...deadlineTodos, res.data]);
+          console.log(res.data);
+          // 추가 후 모달 닫기
+          setShowAddModal(false);
+        }
       })
       .catch((err) => {
         console.error("추가 중 오류 발생", err);
       });
   }
 
-  function delTodo(rmTodo) {
+  function delTodo(rmTodo, endpoint) {
     // 로컬 스토리지에서 액세스 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:3000/api/todos", // Express 서버의 주소
+      baseURL: "http://localhost:3000", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
       },
     });
 
     axiosInstance
-      .delete(`/${rmTodo._id}`)
-      .then((res) =>
-        setTodos(
-          todos.filter((todo) => {
-            return todo._id !== res.data._id;
-          })
-        )
-      )
+      .delete(`${endpoint}/${rmTodo._id}`)
+      .then((res) => {
+        if (endpoint == "/api/todos") {
+          setTodos(
+            todos.filter((todo) => {
+              return todo._id !== res.data._id;
+            })
+          );
+        } else {
+          setDeadlineTodos(
+            deadlineTodos.filter((todo) => {
+              return todo._id !== res.data._id;
+            })
+          );
+        }
+      })
       .catch((err) => {
         console.error("삭제 중 오류 발생", err);
       });
   }
 
-  function updateTodo(modTodo) {
+  function updateTodo(modTodo, endpoint) {
     // 로컬 스토리지에서 액세스 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:3000/api/todos", // Express 서버의 주소
+      baseURL: "http://localhost:3000", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
         "Content-Type": "application/json",
@@ -140,15 +154,24 @@ function TodoApp() {
     }
 
     axiosInstance
-      .put(`/${modTodo._id}`, modTodo)
-      .then((res) =>
-        setTodos(
-          todos.map((todo) => {
-            if (todo._id === res.data._id) return res.data;
-            else return todo;
-          })
-        )
-      )
+      .put(`${endpoint}/${modTodo._id}`, modTodo)
+      .then((res) => {
+        if (endpoint == "/api/todos") {
+          setTodos(
+            todos.map((todo) => {
+              if (todo._id === res.data._id) return res.data;
+              else return todo;
+            })
+          );
+        } else {
+          setDeadlineTodos(
+            deadlineTodos.map((todo) => {
+              if (todo._id === res.data._id) return res.data;
+              else return todo;
+            })
+          );
+        }
+      })
       .catch((err) => {
         console.error("수정 중 오류 발생", err);
       });

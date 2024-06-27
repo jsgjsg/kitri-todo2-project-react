@@ -35,7 +35,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
           </button>
           <button
             onClick={() => {
-              delTodo(todo);
+              delTodo(todo, "/api/todos");
             }}
             className="p-2 rounded-full shadow-md transition duration-300 bg-red-600 hover:bg-red-700 text-white"
           >

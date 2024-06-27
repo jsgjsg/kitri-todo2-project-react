@@ -22,7 +22,7 @@ function TodoInputs({ addTodo }) {
       parentId,
     };
 
-    addTodo(newTodo);
+    addTodo(newTodo, "/api/todos");
 
     // 입력 필드 초기화
     setTitle("");

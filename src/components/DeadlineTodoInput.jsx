@@ -20,7 +20,7 @@ function DeadlineTodoInput({ addTodo }) {
       description,
     };
 
-    addTodo(newTodo);
+    addTodo(newTodo, "/api/deadline");
 
     // 입력 필드 초기화
     setTitle("");
