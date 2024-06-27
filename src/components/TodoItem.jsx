@@ -13,7 +13,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
         type="checkbox"
         checked={completed}
         onChange={() => {
-          updateTodo({ ...todo, completed: !completed });
+          updateTodo({ ...todo, completed: !completed }, "/api/todos");
         }}
         className="mr-2 h-5 w-5 text-blue-500 rounded border-gray-300 focus:ring-blue-400"
       />
@@ -35,7 +35,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
           <FiEdit2 />
         </button>
         <button
-          onClick={() => delTodo(todo)}
+          onClick={() => delTodo(todo, "/api/todos")}
           className="p-2 rounded-full shadow-md transition duration-300 bg-red-600 hover:bg-red-700 text-white"
         >
           <FiTrash2 />
@@ -48,7 +48,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
             <h2 className="text-2xl font-semibold mb-4">Todo Edit</h2>
             <TodoInputs
               addTodo={(updatedTodo) => {
-                updateTodo({ ...updatedTodo, _id: todo._id });
+                updateTodo({ ...updatedTodo, _id: todo._id }, "/api/todos");
                 setShowEditModal(false); // 수정 모달을 닫음
               }}
               initialData={todo} // 초기 데이터로 현재 todo를 전달
