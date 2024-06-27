@@ -4,6 +4,7 @@ import TodoInputs from "./TodoInputs";
 import TodoList from "./TodoList";
 import { useNavigate } from "react-router-dom";
 import DeadlineTodoInput from "./DeadlineTodoInput";
+import DeadlineTodoList from "./DeadIineTodoList";
 
 function TodoApp() {
   const [deadlineTodos, setDeadlineTodos] = useState([]);
@@ -45,19 +46,7 @@ function TodoApp() {
         );
         setTodos([...ascByDate1, ...ascByDate2]);
         // 마감일이 있는 Todo
-        fixO = deadlineres.data.filter((todo) => todo.fixOX == true);
-        ascByDate1 = fixO.sort(
-          (a, b) =>
-            Number(a.dueDate.split("-").join("")) -
-            Number(b.dueDate.split("-").join(""))
-        );
-        fixX = deadlineres.data.filter((todo) => todo.fixOX == false);
-        ascByDate2 = fixX.sort(
-          (a, b) =>
-            Number(a.dueDate.split("-").join("")) -
-            Number(b.dueDate.split("-").join(""))
-        );
-        setDeadlineTodos([...ascByDate1, ...ascByDate2]);
+        setDeadlineTodos(deadlineres.data);
       })
       .catch((err) => {
         console.error("불러오기 중 오류 발생", err);
@@ -218,7 +207,6 @@ function TodoApp() {
             </button>
           </div>
           <div className="flex justify-between mb-4">
-            {/* 추가 상자 */}
             <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full">
               <div className="flex justify-between items-center mb-4">
                 <h2></h2>
@@ -232,7 +220,11 @@ function TodoApp() {
                   +
                 </button>
               </div>
-              <p className="text-sm text-gray-900">1</p>
+              <DeadlineTodoList
+                todos={deadlineTodos}
+                delTodo={delTodo}
+                updateTodo={updateTodo}
+              />
             </div>
           </div>
           <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full">
