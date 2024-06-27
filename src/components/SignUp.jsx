@@ -92,8 +92,16 @@ const SignUp = () => {
             type="submit"
             className="w-full px-4 py-2 bg-indigo-600 rounded-md shadow-sm text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
-            Sign Up
+            SignUp
           </button>
+          <div className="mt-4 text-center">
+            <button
+              onClick={() => navigate("/login")} // 회원가입 페이지로 이동
+              className="text-indigo-600 w-full  px-4 py-2 border border-indigo-600 rounded-md shadow-sm hover:text-indigo-700"
+            >
+              Login
+            </button>
+          </div>
         </form>
       </div>
     </div>
