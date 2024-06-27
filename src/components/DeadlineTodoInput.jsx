@@ -1,31 +1,46 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function DeadlineTodoInput({ addTodo }) {
+function DeadlineTodoInput({ addTodo, initialData, mode, handleCloseModal }) {
   const [title, setTitle] = useState("");
-  const [dueDate, setDueDate] = useState(null); // 날짜 state 추가
+  const [deadline, setDeadline] = useState(null);
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    if (mode === "edit" && initialData) {
+      setTitle(initialData.title);
+      setDeadline(new Date(initialData.deadline));
+      setDescription(initialData.description);
+    }
+  }, [mode, initialData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title) {
-      alert("내용을 입력하세요");
+
+    if (!title.trim()) {
+      alert("제목을 입력하세요");
       return;
     }
 
-    const newTodo = {
-      title,
-      dueDate: dueDate ? dueDate.toLocaleDateString("en-CA") : "", // 선택된 날짜를 ISO 문자열로 변환
-      description,
+    const updatedTodo = {
+      title: title.trim(),
+      deadline: deadline ? deadline.toLocaleDateString("en-CA") : "",
+      description: description.trim(),
     };
 
-    addTodo(newTodo, "/api/deadline");
+    if (mode === "edit") {
+      addTodo({ ...initialData, ...updatedTodo });
+    } else {
+      addTodo(updatedTodo);
+    }
 
     // 입력 필드 초기화
     setTitle("");
-    setDueDate(null);
+    setDeadline(null);
     setDescription("");
+
+    handleCloseModal();
   };
 
   return (
@@ -48,19 +63,18 @@ function DeadlineTodoInput({ addTodo }) {
       </div>
       <div className="mb-4">
         <label
-          htmlFor="dueDate"
+          htmlFor="deadline"
           className="block text-sm font-medium text-gray-700"
         >
           기한
         </label>
         <DatePicker
-          id="dueDate"
-          selected={dueDate} // 선택된 날짜
+          id="deadline"
+          selected={deadline}
           onChange={(newDate) => {
-            console.log(newDate);
-            setDueDate(newDate);
-          }} // 날짜 선택 시 호출될 함수
-          dateFormat="yyyy-MM-dd" // 날짜 포맷 설정 (선택사항)
+            setDeadline(newDate);
+          }}
+          dateFormat="yyyy-MM-dd"
           className="w-full mt-1 p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
           placeholderText="날짜를 선택하세요"
         />
@@ -84,7 +98,7 @@ function DeadlineTodoInput({ addTodo }) {
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300 focus:outline-none"
       >
-        추가하기
+        {mode === "edit" ? "수정하기" : "추가하기"}
       </button>
     </form>
   );

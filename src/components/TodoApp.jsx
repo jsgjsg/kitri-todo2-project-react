@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import TodoInputs from "./TodoInputs";
 import TodoList from "./TodoList";
 import { useNavigate } from "react-router-dom";
-import DeadlineTodoInput from "./DeadlineTodoInput";
-import DeadlineTodoList from "./DeadIineTodoList";
+import DeadlineTodoInput from "../components/DeadlineTodoInput";
+import DeadlineTodoList from "../components/DeadIineTodoList";
 
 function TodoApp() {
   const [deadlineTodos, setDeadlineTodos] = useState([]);
@@ -74,15 +74,12 @@ function TodoApp() {
     axiosInstance
       .post(endpoint, newTodo)
       .then((res) => {
-        if (endpoint == "/api/todos") {
+        if (endpoint === "/api/todos") {
           setTodos([...todos, res.data]);
-          console.log(res.data);
           setShowAddModal(false);
         } else {
           setDeadlineTodos([...deadlineTodos, res.data]);
-          console.log(res.data);
-          // 추가 후 모달 닫기
-          setShowAddModal(false);
+          setShowAddModals(false); // 수정된 부분
         }
       })
       .catch((err) => {
@@ -105,7 +102,7 @@ function TodoApp() {
     axiosInstance
       .delete(`${endpoint}/${rmTodo._id}`)
       .then((res) => {
-        if (endpoint == "/api/todos") {
+        if (endpoint === "/api/todos") {
           setTodos(
             todos.filter((todo) => {
               return todo._id !== res.data._id;
@@ -145,7 +142,7 @@ function TodoApp() {
     axiosInstance
       .put(`${endpoint}/${modTodo._id}`, modTodo)
       .then((res) => {
-        if (endpoint == "/api/todos") {
+        if (endpoint === "/api/todos") {
           setTodos(
             todos.map((todo) => {
               if (todo._id === res.data._id) return res.data;
@@ -276,7 +273,10 @@ function TodoApp() {
                       </button>
                     </div>
                   </div>
-                  <DeadlineTodoInput addTodo={addTodo} />
+                  <DeadlineTodoInput
+                    addTodo={addTodo}
+                    showAddModals={showAddModals}
+                  />
                 </div>
               </div>
             )}
