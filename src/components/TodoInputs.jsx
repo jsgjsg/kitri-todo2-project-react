@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function TodoInputs({ addTodo }) {
-  const [title, setTitle] = useState("");
-  const [dueDate, setDueDate] = useState(null); // 날짜 state 추가
-  const [description, setDescription] = useState("");
-  const [parentId, setParentId] = useState("");
+function TodoInputs({ addTodo, initialData, mode }) {
+  const [title, setTitle] = useState(initialData ? initialData.title : "");
+  const [dueDate, setDueDate] = useState(
+    initialData ? new Date(initialData.dueDate) : null
+  );
+  const [description, setDescription] = useState(
+    initialData ? initialData.description : ""
+  );
+  const [parentId, setParentId] = useState(
+    initialData ? initialData.parentId : ""
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +23,7 @@ function TodoInputs({ addTodo }) {
 
     const newTodo = {
       title,
-      dueDate: dueDate ? dueDate.toLocaleDateString("en-CA") : "", // 선택된 날짜를 ISO 문자열로 변환
+      dueDate: dueDate ? dueDate.toLocaleDateString("en-CA") : "",
       description,
       parentId,
     };
@@ -38,7 +44,7 @@ function TodoInputs({ addTodo }) {
           htmlFor="title"
           className="block text-sm font-medium text-gray-700"
         >
-          투두리스트
+          {mode === "edit" ? "수정할 제목" : "투두리스트"}
         </label>
         <input
           type="text"
@@ -58,12 +64,9 @@ function TodoInputs({ addTodo }) {
         </label>
         <DatePicker
           id="dueDate"
-          selected={dueDate} // 선택된 날짜
-          onChange={(newDate) => {
-            console.log(newDate);
-            setDueDate(newDate);
-          }} // 날짜 선택 시 호출될 함수
-          dateFormat="yyyy-MM-dd" // 날짜 포맷 설정 (선택사항)
+          selected={dueDate}
+          onChange={(newDate) => setDueDate(newDate)}
+          dateFormat="yyyy-MM-dd"
           className="w-full mt-1 p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
           placeholderText="날짜를 선택하세요"
         />
@@ -103,7 +106,7 @@ function TodoInputs({ addTodo }) {
         type="submit"
         className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300 focus:outline-none"
       >
-        추가하기
+        {mode === "edit" ? "수정하기" : "추가하기"}
       </button>
     </form>
   );

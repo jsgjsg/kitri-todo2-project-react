@@ -187,18 +187,18 @@ function TodoApp() {
 
   return (
     <div>
-      <button
-        onClick={handleLogout}
-        className="bg-red-500 text-white px-4 py-2 rounded-md mt-2 ml-2 hover:bg-red-600 transition duration-300"
-      >
-        로그아웃
-      </button>
       <div className="bg-white flex flex-col items-center justify-center">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-4xl text-center font-bold text-black-600 ml-2">
               To do list
             </h1>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded-md mt-2 ml-2 hover:bg-red-600 transition duration-300"
+            >
+              Logout
+            </button>
             <button
               onClick={() => navigate("/calendar")}
               className="bg-green-500 text-white px-4 py-2 rounded-md mt-2 ml-2 hover:bg-green-600 transition duration-300"
