@@ -70,7 +70,6 @@ function TodoApp() {
       alert("내용을 입력하세요");
       return;
     }
-
     axiosInstance
       .post(endpoint, newTodo)
       .then((res) => {

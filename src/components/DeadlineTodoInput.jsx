@@ -30,9 +30,9 @@ function DeadlineTodoInput({ addTodo, initialData, mode, handleCloseModal }) {
     };
 
     if (mode === "edit") {
-      addTodo({ ...initialData, ...updatedTodo });
+      addTodo({ ...initialData, ...updatedTodo }, "/api/deadline");
     } else {
-      addTodo(updatedTodo);
+      addTodo(updatedTodo, "/api/deadline");
     }
 
     // 입력 필드 초기화
