@@ -23,7 +23,7 @@ const TodoListPage = ({ selectedDate }) => {
     });
 
     axiosInstance
-      .get(`/api/todos/${selectedDate}`)
+      .get(`/api/todos/date/${selectedDate}`)
       .then((res) => {
         console.log(res);
         setTodos(res.data);
