@@ -163,10 +163,12 @@ const Calendar = () => {
                 className={`p-4 rounded-lg cursor-pointer ${
                   day.isSame(currentMonth, "month")
                     ? today.isSame(day, "day")
-                      ? "bg-white-200 text-black-800 shadow-md border-4 border-red-500"
+                      ? (hasTodo(day)
+                        ? "bg-purple-200 text-black-800 shadow-md border-4 border-red-500 transform hover:scale-110 transition-transform"
+                        : "bg-white-200 text-black-800 shadow-md border-4 border-red-500") // 오늘
                       : hasTodo(day)
-                      ? "bg-purple-200 text-black-800 shadow-md transform hover:scale-110 transition-transform" // 투두리스트가 있는 날짜 스타일
-                      : "bg-white shadow-md hover:bg-gray-200" // 투두리스트가 없는 날짜 스타일
+                        ? "bg-purple-200 text-black-800 shadow-md transform hover:scale-110 transition-transform" // 투두리스트가 있는 날짜 스타일
+                        : "bg-white shadow-md hover:bg-gray-200" // 투두리스트가 없는 날짜 스타일
                     : "bg-gray-100 text-gray-400" // 이번달 아닌날 스타일
                 }`}
                 onClick={() => handleDateClick(day)}
