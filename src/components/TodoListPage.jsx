@@ -3,9 +3,11 @@ import axios from "axios";
 import TodoInputs from "./TodoInputs";
 import TodoList from "./TodoList";
 import DeadlineTodoInput from "./DeadlineTodoInput";
+import DeadlineTodoList from "./DeadIineTodoList";
 
 const TodoListPage = ({ selectedDate }) => {
   const [todos, setTodos] = useState([]);
+  const [deadlineTodos, setDeadlineTodos] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false); // 모달 팝업 상태 관리
   const [showAddModals, setShowAddModals] = useState(false); // 모달 팝업 상태 관리
   useEffect(() => {
@@ -27,6 +29,16 @@ const TodoListPage = ({ selectedDate }) => {
       .then((res) => {
         console.log(res);
         setTodos(res.data);
+      })
+      .catch((err) => {
+        console.error("불러오기 중 오류 발생", err);
+      });
+
+      axiosInstance
+      .get(`/api/deadline/date/${selectedDate}`)
+      .then((res) => {
+        console.log(res);
+        setDeadlineTodos(res.data);
       })
       .catch((err) => {
         console.error("불러오기 중 오류 발생", err);
@@ -147,7 +159,11 @@ const TodoListPage = ({ selectedDate }) => {
                 +
               </button>
             </div>
-            <p className="text-sm text-gray-900">1</p>
+            <DeadlineTodoList
+              todos={deadlineTodos}
+              delTodo={delTodo}
+              updateTodo={updateTodo}
+            />
           </div>
         </div>
         <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full">

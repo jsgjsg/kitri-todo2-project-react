@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import DeadlineTodoInput from "./DeadlineTodoInput";
 
@@ -6,6 +7,7 @@ function DeadlineTodoItem({ todo, delTodo, updateTodo }) {
   const { completed, title, deadline, description } = todo;
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
+  const [childTodo, setChildTodo] = useState([]);
 
   const handleToggleCompletion = () => {
     updateTodo({ ...todo, completed: !completed }, `/api/deadline`);
@@ -27,6 +29,30 @@ function DeadlineTodoItem({ todo, delTodo, updateTodo }) {
     setShowEditModal(false);
     setShowDetailModal(false);
   };
+
+  useEffect(() => {
+    // 로컬 스토리지에서 액세스 토큰 가져오기
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) navigate("/login");
+    // Axios 인스턴스 생성 및 기본 설정
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:3000", // Express 서버의 주소
+      headers: {
+        Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
+        "Content-Type": "application/json",
+      },
+    });
+
+    axiosInstance
+      .get(`/api/deadline/${todo._id}`)
+      .then((deadlineres) => {
+        console.log(deadlineres.data); // 보류
+        setChildTodo(deadlineres.data.todos);
+      })
+      .catch((err) => {
+        console.error("불러오기 중 오류 발생", err);
+      });
+  }, []);
 
   return (
     <li className="flex justify-between items-center bg-gray-300 p-4 my-2 rounded-lg shadow-md">
@@ -65,7 +91,7 @@ function DeadlineTodoItem({ todo, delTodo, updateTodo }) {
 
       {showEditModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+          <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-2xl font-semibold mb-4">Todo Edit</h2>
             <DeadlineTodoInput
               addTodo={(updatedTodo) => {
@@ -90,7 +116,7 @@ function DeadlineTodoItem({ todo, delTodo, updateTodo }) {
 
       {showDetailModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-          <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+          <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
             <h2 className="text-2xl font-semibold mb-4 text-center">
               Todo Details
             </h2>
@@ -110,6 +136,18 @@ function DeadlineTodoItem({ todo, delTodo, updateTodo }) {
                   <strong>상세정보:</strong> {description}
                 </p>
               </div>
+              {childTodo.length > 0 && (
+                <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
+                  <p className="text-gray-600">
+                    <strong>하위 Todo</strong>
+                  </p>
+                  <ul className="list-disc list-inside text-gray-600 ml-4">
+                    {childTodo.map((child) => (
+                      <li key={child._id} className="ml-2 py-1">{child.title}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
             <div className="flex justify-end mt-4">
               <button
