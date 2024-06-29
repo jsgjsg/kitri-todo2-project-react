@@ -2,10 +2,13 @@ import { useState } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import TodoInputs from "./TodoInputs"; // TodoInputs 컴포넌트 import
 
-function TodoItem({ todo, delTodo, updateTodo }) {
-  const { completed, title, dueDate, description } = todo;
+function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
+  const { completed, title, dueDate, description, deadlineId } = todo;
   const [showEditModal, setShowEditModal] = useState(false); // 수정 모달 상태 관리
   const [showDetailModal, setShowDetailModal] = useState(false); // 상세 정보 모달 상태 관리
+
+  let selectedParent;
+  if(parentOptions) selectedParent = parentOptions.find(option => option._id === deadlineId);
 
   return (
     <li className="flex justify-between items-center bg-gray-100 p-4 my-2 rounded-lg shadow-md">
@@ -53,6 +56,7 @@ function TodoItem({ todo, delTodo, updateTodo }) {
               }}
               initialData={todo} // 초기 데이터로 현재 todo를 전달
               mode="edit" // 모드를 수정으로 설정
+              parentOptions={parentOptions}
             />
             <div className="flex justify-end">
               <button
@@ -88,6 +92,16 @@ function TodoItem({ todo, delTodo, updateTodo }) {
                   <strong>상세정보:</strong> {description}
                 </p>
               </div>
+              {deadlineId && selectedParent && (
+                <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
+                  <p className="text-gray-600">
+                    <strong>상위 Todo:</strong>{" "}
+                    <span className="text-blue-600 font-semibold">{selectedParent.title}</span>
+                    <strong> | 마감일:</strong>{" "}
+                    <span className="text-red-500 font-semibold">{selectedParent.deadline}</span>
+                  </p>
+                </div>
+              )}
             </div>
             <div className="flex justify-end mt-4">
               <button

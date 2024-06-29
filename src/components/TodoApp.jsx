@@ -31,6 +31,10 @@ function TodoApp() {
       axiosInstance.get("/api/deadline"),
     ])
       .then(([todosres, deadlineres]) => {
+        console.log("=============");
+        console.log(deadlineres);
+        console.log("=============");
+
         // 당일 Todo
         let fixO = todosres.data.filter((todo) => todo.fixOX == true);
         let ascByDate1 = fixO.sort(
@@ -53,6 +57,9 @@ function TodoApp() {
       });
   }, []);
 
+  const parentOptions = deadlineTodos;
+  console.log(parentOptions);
+
   function addTodo(newTodo, endpoint) {
     // 로컬 스토리지에서 액세스 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
@@ -68,6 +75,10 @@ function TodoApp() {
 
     if (newTodo.title === "") {
       alert("내용을 입력하세요");
+      return;
+    }
+    if (newTodo.dueDate === "") {
+      alert("날짜를 입력하세요");
       return;
     }
     axiosInstance
@@ -182,104 +193,109 @@ function TodoApp() {
   };
 
   return (
-    <div>
-      <div className="bg-white flex flex-col items-center justify-center">
-        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-          <div className="flex justify-between items-center mb-4">
-            <h1 className="text-4xl text-center font-bold text-black-600 ml-2">
-              To do list
-            </h1>
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded-md mt-2 ml-2 hover:bg-red-600 transition duration-300"
-            >
-              Logout
-            </button>
-            <button
-              onClick={() => navigate("/calendar")}
-              className="bg-green-500 text-white px-4 py-2 rounded-md mt-2 ml-2 hover:bg-green-600 transition duration-300"
-            >
-              📅 달력
-            </button>
-          </div>
-          <div className="flex justify-between mb-4">
-            <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full">
-              <div className="flex justify-between items-center mb-4">
-                <h2></h2>
-                <h2 className="text-lg text-center font-semibold text-gray-800 mb-2">
-                  기한 있는 TODO
-                </h2>
-                <button
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300"
-                  onClick={() => setShowAddModals(true)}
-                >
-                  +
-                </button>
-              </div>
-              <DeadlineTodoList
-                todos={deadlineTodos}
-                delTodo={delTodo}
-                updateTodo={updateTodo}
-              />
-            </div>
-          </div>
+    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        <div className="flex flex-col items-center justify-center mb-4">
+          <h1 className="text-4xl text-center font-bold text-black-600 ml-2">
+            To do list
+          </h1>
+        </div>
+        <div className="flex justify-between mb-4">
           <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full">
             <div className="flex justify-between items-center mb-4">
               <h2></h2>
               <h2 className="text-lg text-center font-semibold text-gray-800 mb-2">
-                To-do
+                기한 있는 TODO
               </h2>
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300"
-                onClick={() => setShowAddModal(true)}
+                onClick={() => setShowAddModals(true)}
               >
                 +
               </button>
             </div>
-            <TodoList todos={todos} delTodo={delTodo} updateTodo={updateTodo} />
+            <DeadlineTodoList
+              todos={deadlineTodos}
+              delTodo={delTodo}
+              updateTodo={updateTodo}
+            />
+          </div>
+        </div>
+        <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full">
+          <div className="flex justify-between items-center mb-4">
+            <h2></h2>
+            <h2 className="text-lg text-center font-semibold text-gray-800 mb-2">
+              To-do
+            </h2>
+            <button
+              className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300"
+              onClick={() => setShowAddModal(true)}
+            >
+              +
+            </button>
+          </div>
+          <TodoList
+            todos={todos}
+            delTodo={delTodo}
+            updateTodo={updateTodo}
+            parentOptions={parentOptions}
+          />
 
-            {showAddModal && (
-              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-semibold mb-4">
-                      Todo-list 추가
-                    </h2>
+          {showAddModal && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+              <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-2xl font-semibold mb-4">
+                    Todo-list 추가
+                  </h2>
+                  <button
+                    className="bg-red-500 text-white px-4 py-2 rounded-md mt-4 mr-2 hover:bg-red-600 transition duration-300"
+                    onClick={() => setShowAddModal(false)}
+                  >
+                    X
+                  </button>
+                </div>
+                <TodoInputs addTodo={addTodo} parentOptions={parentOptions} />
+              </div>
+            </div>
+          )}
+          {showAddModals && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
+              <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+                <div className="flex justify-between items-center mb-4">
+                  <h2 className="text-2xl font-semibold mb-4">
+                    기한있는 Todo-list 추가
+                  </h2>
+                  <div className="flex justify-end">
                     <button
                       className="bg-red-500 text-white px-4 py-2 rounded-md mt-4 mr-2 hover:bg-red-600 transition duration-300"
-                      onClick={() => setShowAddModal(false)}
+                      onClick={() => setShowAddModals(false)}
                     >
                       X
                     </button>
                   </div>
-                  <TodoInputs addTodo={addTodo} />
                 </div>
+                <DeadlineTodoInput
+                  addTodo={addTodo}
+                  showAddModals={showAddModals}
+                />
               </div>
-            )}
-            {showAddModals && (
-              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-                <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-                  <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-semibold mb-4">
-                      기한있는 Todo-list 추가
-                    </h2>
-                    <div className="flex justify-end">
-                      <button
-                        className="bg-red-500 text-white px-4 py-2 rounded-md mt-4 mr-2 hover:bg-red-600 transition duration-300"
-                        onClick={() => setShowAddModals(false)}
-                      >
-                        X
-                      </button>
-                    </div>
-                  </div>
-                  <DeadlineTodoInput
-                    addTodo={addTodo}
-                    showAddModals={showAddModals}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
+            </div>
+          )}
+        </div>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={() => navigate("/calendar")}
+            className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300"
+          >
+            📅 달력
+          </button>
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300"
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>
