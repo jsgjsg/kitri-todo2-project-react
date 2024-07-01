@@ -3,12 +3,17 @@ import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import TodoInputs from "./TodoInputs"; // TodoInputs 컴포넌트 import
 
 function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
-  const { completed, title, dueDate, description, deadlineId } = todo;
+  const { completed, title, dueDate, description, deadlineId, fixOX } = todo;
   const [showEditModal, setShowEditModal] = useState(false); // 수정 모달 상태 관리
   const [showDetailModal, setShowDetailModal] = useState(false); // 상세 정보 모달 상태 관리
 
   let selectedParent;
-  if(parentOptions) selectedParent = parentOptions.find(option => option._id === deadlineId);
+  if (parentOptions)
+    selectedParent = parentOptions.find((option) => option._id === deadlineId);
+
+  function fixTodo() {
+    updateTodo({ ...todo, fixOX: !fixOX }, "/api/todos");
+  }
 
   return (
     <li className="flex justify-between items-center bg-gray-100 p-4 my-2 rounded-lg shadow-md">
@@ -73,9 +78,21 @@ function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
       {showDetailModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
           <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-            <h2 className="text-2xl font-semibold mb-4 text-center">
-              Todo Details
-            </h2>
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-2xl font-semibold mb-4 text-center">
+                Todo Details
+              </h2>
+              <button
+                className={
+                  fixOX
+                    ? "bg-red-600 text-white px-2 py-2 rounded-md mt-2 mr-2 hover:bg-white transition duration-300"
+                    : "bg-white text-white px-2 py-2 rounded-md mt-2 mr-2 hover:bg-red-600 transition duration-300"
+                }
+                onClick={fixTodo}
+              >
+                📌
+              </button>
+            </div>
             <div className="space-y-4">
               <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
                 <p className="text-gray-600">
@@ -96,9 +113,13 @@ function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
                 <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
                   <p className="text-gray-600">
                     <strong>상위 Todo:</strong>{" "}
-                    <span className="text-blue-600 font-semibold">{selectedParent.title}</span>
+                    <span className="text-blue-600 font-semibold">
+                      {selectedParent.title}
+                    </span>
                     <strong> | 마감일:</strong>{" "}
-                    <span className="text-red-500 font-semibold">{selectedParent.deadline}</span>
+                    <span className="text-red-500 font-semibold">
+                      {selectedParent.deadline}
+                    </span>
                   </p>
                 </div>
               )}
