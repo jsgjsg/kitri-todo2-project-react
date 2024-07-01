@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-function TodoInputs({ addTodo, initialData, mode, parentOptions }) {
+function TodoInputs({ addTodo, initialData, mode }) {
   const [title, setTitle] = useState(initialData ? initialData.title : "");
   const [dueDate, setDueDate] = useState(
     initialData ? new Date(initialData.dueDate) : null
@@ -10,16 +10,9 @@ function TodoInputs({ addTodo, initialData, mode, parentOptions }) {
   const [description, setDescription] = useState(
     initialData ? initialData.description : ""
   );
-  const [parentId, setParentId] = useState("");
-
-  // 초기 데이터가 있을 경우 parentId 상태 설정
-  
-  useEffect(() => {
-    console.log(initialData);
-    if (initialData && initialData.deadlineId) {
-      setParentId(initialData.deadlineId);
-    }
-  }, [initialData]);
+  const [parentId, setParentId] = useState(
+    initialData ? initialData.parentId : ""
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,22 +20,13 @@ function TodoInputs({ addTodo, initialData, mode, parentOptions }) {
       alert("내용을 입력하세요");
       return;
     }
-    if (!dueDate) {
-      alert("날짜를 입력하세요");
-      return;
-    }
 
-    // 선택된 parentId에 해당하는 옵션 찾기
-    const selectedParent = parentOptions.find(option => option._id === parentId);
-    console.log(selectedParent);
     const newTodo = {
       title,
       dueDate: dueDate ? dueDate.toLocaleDateString("en-CA") : "",
       description,
-      parentId: selectedParent ? selectedParent._id : "", // 선택된 옵션의 _id 사용
+      parentId,
     };
-
-    console.log(newTodo);
 
     addTodo(newTodo, "/api/todos");
 
@@ -85,6 +69,7 @@ function TodoInputs({ addTodo, initialData, mode, parentOptions }) {
           dateFormat="yyyy-MM-dd"
           className="w-full mt-1 p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
           placeholderText="날짜를 선택하세요"
+          // disabled={!!dueDate} // dueDate가 있을 때만 disabled 속성 추가
         />
       </div>
       <div className="mb-4">
@@ -107,21 +92,16 @@ function TodoInputs({ addTodo, initialData, mode, parentOptions }) {
           htmlFor="parentId"
           className="block text-sm font-medium text-gray-700"
         >
-          상위 투두리스트 (선택)
+          상위 투두리스트 ID (선택)
         </label>
-        <select
+        <input
+          type="text"
           id="parentId"
+          placeholder="상위 투두리스트 ID"
           className="w-full mt-1 p-2 rounded-md border border-gray-300 focus:outline-none focus:border-blue-500"
           value={parentId}
           onChange={(e) => setParentId(e.target.value)}
-        >
-          <option key="select" value="">선택하세요</option>
-          {parentOptions.map((option) => (
-            <option key={option._id} value={option._id}>
-              {option.title}
-            </option>
-          ))}
-        </select>
+        />
       </div>
       <button
         type="submit"
