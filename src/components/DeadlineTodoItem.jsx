@@ -99,7 +99,7 @@ function DeadlineTodoItem({ todo, delTodo, updateTodo }) {
                 handleCloseModals(); // 수정 모달을 닫음
               }}
               initialData={todo} // 초기 데이터로 현재 todo를 전달
-              mode="edit" // 모드를 수정으로 설정
+              mode="edit" // 모드를 수정으로 설정 z
               handleCloseModal={handleCloseModals} // 모달 닫기 함수 전달
             />
             <div className="flex justify-end">
