@@ -3,7 +3,7 @@ import axios from "axios";
 import TodoInputs from "./TodoInputs";
 import TodoList from "./TodoList";
 import DeadlineTodoInput from "./DeadlineTodoInput";
-import DeadlineTodoList from "./DeadIineTodoList";
+import DeadlineTodoList from "./DeadlineTodoList";
 
 const TodoListPage = ({ selectedDate }) => {
   const [todos, setTodos] = useState([]);
@@ -195,7 +195,7 @@ const TodoListPage = ({ selectedDate }) => {
                     X
                   </button>
                 </div>
-                <TodoInputs addTodo={addTodo} />
+                <TodoInputs addTodo={addTodo} initialData={{dueDate: selectedDate}}/>
               </div>
             </div>
           )}

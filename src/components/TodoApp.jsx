@@ -4,7 +4,7 @@ import TodoInputs from "./TodoInputs";
 import TodoList from "./TodoList";
 import { useNavigate } from "react-router-dom";
 import DeadlineTodoInput from "../components/DeadlineTodoInput";
-import DeadlineTodoList from "../components/DeadIineTodoList";
+import DeadlineTodoList from "./DeadlineTodoList";
 
 function TodoApp() {
   const [deadlineTodos, setDeadlineTodos] = useState([]);
