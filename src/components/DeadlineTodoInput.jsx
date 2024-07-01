@@ -23,6 +23,11 @@ function DeadlineTodoInput({ addTodo, initialData, mode, handleCloseModal }) {
       return;
     }
 
+    if (!deadline) {
+      alert("기한을 입력하세요");
+      return;
+    }
+
     const updatedTodo = {
       title: title.trim(),
       deadline: deadline ? deadline.toLocaleDateString("en-CA") : "",
