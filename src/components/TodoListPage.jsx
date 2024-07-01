@@ -10,6 +10,7 @@ const TodoListPage = ({ selectedDate }) => {
   const [deadlineTodos, setDeadlineTodos] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false); // 모달 팝업 상태 관리
   const [showAddModals, setShowAddModals] = useState(false); // 모달 팝업 상태 관리
+  const [parentOptions, setParentOptions] = useState([]);
   useEffect(() => {
     // 로컬 스토리지에서 액세스 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
@@ -39,6 +40,28 @@ const TodoListPage = ({ selectedDate }) => {
       .then((res) => {
         console.log(res);
         setDeadlineTodos(res.data);
+      })
+      .catch((err) => {
+        console.error("불러오기 중 오류 발생", err);
+      });
+  }, []);
+
+  useEffect(() => {
+    // 로컬 스토리지에서 액세스 토큰 가져오기
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) navigate("/login");
+    // Axios 인스턴스 생성 및 기본 설정
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:3000", // Express 서버의 주소
+      headers: {
+        Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
+        "Content-Type": "application/json",
+      },
+    });
+
+    axiosInstance.get("/api/deadline")
+    .then((deadlineres) => {
+        setParentOptions(deadlineres.data);
       })
       .catch((err) => {
         console.error("불러오기 중 오류 발생", err);
@@ -195,7 +218,7 @@ const TodoListPage = ({ selectedDate }) => {
                     X
                   </button>
                 </div>
-                <TodoInputs addTodo={addTodo} />
+                <TodoInputs addTodo={addTodo} parentOptions = {parentOptions}/>
               </div>
             </div>
           )}
