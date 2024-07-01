@@ -13,6 +13,9 @@ function TodoInputs({ addTodo, initialData, mode, parentOptions }) {
   const [parentId, setParentId] = useState("");
 
   // 초기 데이터가 있을 경우 parentId 상태 설정
+  console.log("===========");
+  console.log(parentOptions);
+  console.log("===========");
   
   useEffect(() => {
     console.log(initialData);
