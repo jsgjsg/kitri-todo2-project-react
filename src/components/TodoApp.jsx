@@ -81,6 +81,7 @@ function TodoApp() {
       alert("날짜를 입력하세요");
       return;
     }
+    console.log(endpoint);
     axiosInstance
       .post(endpoint, newTodo)
       .then((res) => {
