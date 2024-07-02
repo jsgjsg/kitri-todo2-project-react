@@ -28,11 +28,9 @@ const Calendar = () => {
 
   // 투두리스트 데이터 가져오는 함수
   useEffect(() => {
-    // 여기서 실제 API 호출 등을 통해 데이터를 가져올 수 있습니다.
     axiosInstance
       .get(`/api/todos/hasDate`)
       .then((res) => {
-        console.log(res);
         setTodos(res.data);
       })
       .catch((err) => {
@@ -42,7 +40,6 @@ const Calendar = () => {
     axiosInstance
       .get(`/api/deadline/date/hasDate`)
       .then((res) => {
-        console.log(res);
         setDeadline(res.data);
       })
       .catch((err) => {
@@ -122,22 +119,31 @@ const Calendar = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="max-w-5xl mx-auto p-8 bg-white rounded-lg shadow-lg">
+    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-pink-200 to-pink-300">
+      <div className="w-full max-w-xl mx-4 p-6 bg-white rounded-2xl shadow-lg border border-gray-200">
         <div className="flex justify-between items-center mb-6">
-          <div>
-            <button
-              onClick={handlePrevMonth}
-              className="px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          <button
+            onClick={handlePrevMonth}
+            className="p-4 text-white bg-gradient-to-br from-pink-500 to-pink-600 rounded-full border border-gray-300 shadow-lg hover:scale-105 transition-transform"
+          >
+            <svg
+              className="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              이전
-            </button>
-          </div>
-          <div className="flex items-center space-x-4">
+              <path d="M15 18l-6-6 6-6" />
+            </svg>
+          </button>
+          <div className="flex flex-col items-center">
             <select
               value={selectedYear}
               onChange={handleYearChange}
-              className="px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="px-5 py-3 bg-pink-100 border border-pink-300 rounded-full text-sm font-medium shadow-md focus:outline-none focus:ring-2 focus:ring-pink-400"
             >
               {[...Array(10).keys()].map((index) => (
                 <option key={index} value={dayjs().year() - 5 + index}>
@@ -148,7 +154,7 @@ const Calendar = () => {
             <select
               value={selectedMonth}
               onChange={handleMonthChange}
-              className="px-3 py-2 bg-gray-100 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-300"
+              className="px-5 py-3 bg-pink-100 border border-pink-300 rounded-full text-sm font-medium shadow-md mt-2 focus:outline-none focus:ring-2 focus:ring-pink-400"
             >
               {[...Array(12).keys()].map((index) => (
                 <option key={index} value={index + 1}>
@@ -157,35 +163,44 @@ const Calendar = () => {
               ))}
             </select>
           </div>
-          <div>
-            <button
-              onClick={handleNextMonth}
-              className="px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300"
+          <button
+            onClick={handleNextMonth}
+            className="p-4 text-white bg-gradient-to-br from-pink-500 to-pink-600 rounded-full border border-gray-300 shadow-lg hover:scale-105 transition-transform"
+          >
+            <svg
+              className="w-6 h-6"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
-              다음
-            </button>
-          </div>
+              <path d="M9 18l6-6-6-6" />
+            </svg>
+          </button>
         </div>
-        <div className="text-center mt-4">
-          <ul className="flex space-x-4">
-            <li className="flex items-center">
-              <span className="w-4 h-4 mr-2 bg-red-600 rounded-full"></span>
-              <span className="text-red-600 font-semibold">기한 내 해야할 Todo</span>
+        <div className="text-center mb-6">
+          <ul className="flex justify-center space-x-6 mb-4 text-sm font-medium">
+            <li className="flex items-center space-x-2">
+              <span className="w-5 h-5 bg-red-300 rounded-full ring-2 ring-red-200 shadow-lg"></span>
+              <span className="text-red-600">기한 내 해야할 Todo</span>
             </li>
-            <li className="flex items-center">
-              <span className="w-4 h-4 mr-2 bg-blue-600 rounded-full"></span>
-              <span className="text-blue-600 font-semibold">오늘 해야할 Todo</span>
+            <li className="flex items-center space-x-2">
+              <span className="w-5 h-5 bg-pink-300 rounded-full ring-2 ring-pink-200 shadow-lg"></span>
+              <span className="text-pink-600">오늘 해야할 Todo</span>
             </li>
-            <li className="flex items-center">
-              <span className="w-4 h-4 mr-2 bg-purple-600 rounded-full"></span>
-              <span className="text-purple-600 font-semibold">둘다</span>
+            <li className="flex items-center space-x-2">
+              <span className="w-5 h-5 bg-purple-300 rounded-full ring-2 ring-purple-200 shadow-lg"></span>
+              <span className="text-purple-600">둘다</span>
             </li>
           </ul>
-        </div><br/>
-        <hr></hr><br/>
-        <div className="grid grid-cols-7 gap-2 text-center">
+          <hr className="my-4 border-t-2 border-gray-200" />
+        </div>
+        <div className="grid grid-cols-7 gap-2 text-center text-sm font-medium">
           {["일", "월", "화", "수", "목", "금", "토"].map((day, index) => (
-            <div key={index} className="font-semibold text-gray-600">
+            <div key={index} className="text-gray-600">
               {day}
             </div>
           ))}
@@ -194,28 +209,36 @@ const Calendar = () => {
               {week.map((day) => (
                 <div
                   key={day.format("YYYY-MM-DD")}
-                  className={`p-4 rounded-lg cursor-pointer ${
+                  className={`flex items-center justify-center h-14 w-14 rounded-full cursor-pointer transition-transform ${
                     day.isSame(currentMonth, "month")
                       ? today.isSame(day, "day")
                         ? hasTodo(day) && hasDeadline(day)
-                          ? "bg-purple-200 text-black-800 shadow-md border-4 border-red-500 transform hover:scale-110 transition-transform"
+                          ? "bg-gradient-to-br from-teal-300 to-teal-400 text-white border-2 border-teal-500 shadow-xl hover:scale-110"
                           : hasTodo(day)
-                          ? "bg-blue-200 text-black-800 shadow-md border-4 border-red-500 transform hover:scale-110 transition-transform"
+                          ? "bg-gradient-to-br from-pink-300 to-pink-400 text-white border-2 border-pink-500 shadow-xl hover:scale-110"
                           : hasDeadline(day)
-                          ? "bg-red-200 text-black-800 shadow-md border-4 border-red-500 transform hover:scale-110 transition-transform"
-                          : "bg-white-200 text-black-800 shadow-md border-4 border-red-500"
+                          ? "bg-gradient-to-br from-red-300 to-red-400 text-white border-2 border-red-600 shadow-xl hover:scale-110"
+                          : "bg-white text-gray-800 border-2 border-gray-300 shadow-md hover:bg-gray-100"
                         : hasTodo(day) && hasDeadline(day)
-                        ? "bg-purple-200 text-black-800 shadow-md transform hover:scale-110 transition-transform"
+                        ? "bg-gradient-to-br from-purple-300 to-purple-400 text-white border-2 border-purple-500 shadow-xl hover:scale-110"
                         : hasTodo(day)
-                        ? "bg-blue-200 text-black-800 shadow-md transform hover:scale-110 transition-transform"
+                        ? "bg-gradient-to-br from-pink-300 to-pink-400 text-white border-2 border-pink-500 shadow-xl hover:scale-110"
                         : hasDeadline(day)
-                        ? "bg-red-200 text-black-800 shadow-md transform hover:scale-110 transition-transform"
-                        : "bg-white shadow-md hover:bg-gray-200"
-                      : "bg-gray-100 text-gray-400"
+                        ? "bg-gradient-to-br from-red-300 to-red-400 text-white border-2 border-red-600 shadow-xl hover:scale-110"
+                        : "bg-white text-gray-800 border-2 border-gray-300 shadow-md hover:bg-gray-100"
+                      : "bg-gray-200 text-gray-400 cursor-not-allowed"
                   }`}
-                  onClick={() => handleDateClick(day)}
+                  onClick={() =>
+                    day.isSame(currentMonth, "month") && handleDateClick(day)
+                  }
                 >
-                  <div className="text-lg font-semibold">{day.date()}</div>
+                  <div
+                    className={`text-lg font-semibold ${
+                      today.isSame(day, "day") ? "text-teal-500" : ""
+                    }`}
+                  >
+                    {day.date()}
+                  </div>
                 </div>
               ))}
             </React.Fragment>
@@ -223,13 +246,24 @@ const Calendar = () => {
         </div>
 
         {showTodoModal && (
-          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-            <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md relative">
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-50">
+            <div className="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md relative">
               <button
-                className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 absolute top-4 right-4"
+                className="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded-full hover:bg-red-600 transition duration-300"
                 onClick={() => setShowTodoModal(false)}
               >
-                X
+                <svg
+                  className="w-4 h-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
               </button>
               <TodoListPage selectedDate={selectedDate} />
             </div>
@@ -237,7 +271,7 @@ const Calendar = () => {
         )}
         <button
           onClick={() => navigate("/")}
-          className="bg-blue-500 text-white text-center px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300"
+          className="bg-gradient-to-r from-pink-400 to-pink-500 text-white text-center px-6 py-3 rounded-full mt-6 hover:from-pink-500 hover:to-pink-600 transition duration-300"
         >
           Todo-list
         </button>

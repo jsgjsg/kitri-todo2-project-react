@@ -16,7 +16,11 @@ function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
   }
 
   return (
-    <li className="flex justify-between items-center bg-gray-100 p-4 my-2 rounded-lg shadow-md">
+    <li
+      className={`flex justify-between items-center p-4 my-2 rounded-lg shadow-md ${
+        fixOX ? "bg-pink-100 border border-pink-200" : "bg-gray-100"
+      }`}
+    >
       <input
         type="checkbox"
         checked={completed}
@@ -86,7 +90,7 @@ function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
                 className={
                   fixOX
                     ? "bg-red-600 text-white px-2 py-2 rounded-md mt-2 mr-2 hover:bg-white transition duration-300"
-                    : "bg-white text-white px-2 py-2 rounded-md mt-2 mr-2 hover:bg-red-600 transition duration-300"
+                    : "bg-white text-red-600 px-2 py-2 rounded-md mt-2 mr-2 hover:bg-red-600 hover:text-white transition duration-300"
                 }
                 onClick={fixTodo}
               >
