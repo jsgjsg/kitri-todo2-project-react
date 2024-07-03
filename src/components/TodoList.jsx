@@ -1,6 +1,6 @@
 import TodoItem from "./TodoItem";
 
-function TodoList({ todos, delTodo, updateTodo, parentOptions }) {
+function TodoList({ todos, delTodo, updateTodo, parentOptions, unnecessary }) {
   return (
     <ul>
       {todos.map((todo) => {
@@ -11,6 +11,7 @@ function TodoList({ todos, delTodo, updateTodo, parentOptions }) {
             delTodo={delTodo}
             updateTodo={updateTodo}
             parentOptions = {parentOptions}
+            unnecessary = {unnecessary}
           />
         );
       })}

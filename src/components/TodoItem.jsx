@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import TodoInputs from "./TodoInputs"; // TodoInputs 컴포넌트 import
 
-function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
+function TodoItem({ todo, delTodo, updateTodo, parentOptions, unnecessary }) {
   const { completed, title, dueDate, description, deadlineId, fixOX } = todo;
   const [showEditModal, setShowEditModal] = useState(false); // 수정 모달 상태 관리
   const [showDetailModal, setShowDetailModal] = useState(false); // 상세 정보 모달 상태 관리
@@ -13,6 +13,7 @@ function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
 
   function fixTodo() {
     updateTodo({ ...todo, fixOX: !fixOX }, "/api/todos");
+    setShowDetailModal(false);
   }
 
   return (
@@ -39,7 +40,8 @@ function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
         {title}
       </span>
       <span className="mr-2 text-gray-500"> {dueDate} </span>
-      <div className="flex space-x-2">
+      {!unnecessary &&
+        <div className="flex space-x-2">
         <button
           onClick={() => setShowEditModal(true)} // 수정 모달을 표시
           className="p-2 rounded-full shadow-md transition duration-300 bg-orange-400 hover:bg-orange-500 text-white"
@@ -53,6 +55,7 @@ function TodoItem({ todo, delTodo, updateTodo, parentOptions }) {
           <FiTrash2 />
         </button>
       </div>
+      }
 
       {showEditModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">

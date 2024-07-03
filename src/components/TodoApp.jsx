@@ -13,8 +13,7 @@ function TodoApp() {
   const [showAddModals, setShowAddModals] = useState(false); // 모달 팝업 상태 관리
   const navigate = useNavigate(); // useNavigate 훅 사용
 
-  useEffect(() => {
-    // 로컬 스토리지에서 액세스 토큰 가져오기
+  function getData() {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) navigate("/login");
     // Axios 인스턴스 생성 및 기본 설정
@@ -51,7 +50,9 @@ function TodoApp() {
       .catch((err) => {
         console.error("불러오기 중 오류 발생", err);
       });
-  }, []);
+  }
+
+  useEffect(getData, []);
 
   const parentOptions = deadlineTodos;
 
@@ -162,7 +163,7 @@ function TodoApp() {
             })
           );
         }
-        window.location.reload();
+        getData();
       })
       .catch((err) => {
         console.error("수정 중 오류 발생", err);

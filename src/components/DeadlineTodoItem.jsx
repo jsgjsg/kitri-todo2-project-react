@@ -3,14 +3,14 @@ import { useEffect, useState } from "react";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import DeadlineTodoInput from "./DeadlineTodoInput";
 
-function DeadlineTodoItem({ todo, delTodo, updateTodo }) {
+function DeadlineTodoItem({ todo, delTodo, updateTodo, unnecessary }) {
   const { completed, title, deadline, description } = todo;
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDetailModal, setShowDetailModal] = useState(false);
   const [childTodo, setChildTodo] = useState([]);
 
   const handleToggleCompletion = () => {
-    updateTodo({ ...todo, completed: !completed }, `/api/deadline`);
+    updateTodo({ ...todo, completed: !completed }, "/api/deadline");
   };
 
   const handleEditClick = () => {
@@ -73,20 +73,22 @@ function DeadlineTodoItem({ todo, delTodo, updateTodo }) {
           {title}
         </span>
         <span className="mr-2"> {deadline} </span>
-        <div className="flex space-x-2">
-          <button
-            onClick={handleEditClick}
-            className="p-2 rounded-full shadow-md transition duration-300 bg-orange-400 hover:bg-orange-500 text-white"
-          >
-            <FiEdit2 />
-          </button>
-          <button
-            onClick={handleDeleteClick}
-            className="p-2 rounded-full shadow-md transition duration-300 bg-red-600 hover:bg-red-700 text-white"
-          >
-            <FiTrash2 />
-          </button>
-        </div>
+        {!unnecessary &&
+          <div className="flex space-x-2">
+            <button
+              onClick={handleEditClick}
+              className="p-2 rounded-full shadow-md transition duration-300 bg-orange-400 hover:bg-orange-500 text-white"
+            >
+              <FiEdit2 />
+            </button>
+            <button
+              onClick={handleDeleteClick}
+              className="p-2 rounded-full shadow-md transition duration-300 bg-red-600 hover:bg-red-700 text-white"
+            >
+              <FiTrash2 />
+            </button>
+          </div>
+        }
       </div>
 
       {showEditModal && (
