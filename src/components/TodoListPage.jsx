@@ -125,13 +125,13 @@ const TodoListPage = ({ selectedDate }) => {
       });
   }
 
-  function updateTodo(modTodo) {
+  function updateTodo(modTodo, endpoint) {
     // 로컬 스토리지에서 액세스 토큰 가져오기
     const accessToken = localStorage.getItem("accessToken");
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:3000/api/todos", // Express 서버의 주소
+      baseURL: "http://localhost:3000", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
         "Content-Type": "application/json",
@@ -144,15 +144,25 @@ const TodoListPage = ({ selectedDate }) => {
     }
 
     axiosInstance
-      .put(`/${modTodo._id}`, modTodo)
-      .then((res) =>
-        setTodos(
-          todos.map((todo) => {
-            if (todo._id === res.data._id) return res.data;
-            else return todo;
-          })
-        )
-      )
+      .put(`${endpoint}/${modTodo._id}`, modTodo)
+      .then((res) => {
+        if (endpoint === "/api/todos") {
+          setTodos(
+            todos.map((todo) => {
+              if (todo._id === res.data._id) return res.data;
+              else return todo;
+            })
+          );
+        } else {
+          setDeadlineTodos(
+            deadlineTodos.map((todo) => {
+              if (todo._id === res.data._id) return res.data;
+              else return todo;
+            })
+          );
+        }
+        getData();
+      })
       .catch((err) => {
         console.error("수정 중 오류 발생", err);
       });
@@ -170,39 +180,31 @@ const TodoListPage = ({ selectedDate }) => {
         <div className="flex justify-between mb-4">
           {/* 추가 상자 */}
           <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full">
-            <div className="flex justify-between items-center mb-4">
-              <h2></h2>
+            <div className="flex justify-center items-center mb-4">
               <h2 className="text-lg text-center font-semibold text-gray-800 mb-2">
                 기한 있는 TODO
               </h2>
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300"
-                onClick={() => setShowAddModals(true)}
-              >
-                +
-              </button>
             </div>
             <DeadlineTodoList
               todos={deadlineTodos}
               delTodo={delTodo}
               updateTodo={updateTodo}
+              unnecessary = {true}
             />
           </div>
         </div>
         <div className="bg-gray-100 p-4 rounded-lg shadow-md w-full">
-          <div className="flex justify-between items-center mb-4">
-            <h2></h2>
+          <div className="flex justify-center items-center mb-4">
             <h2 className="text-lg text-center font-semibold text-gray-800 mb-2">
               To-do
             </h2>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md mt-2 hover:bg-blue-600 transition duration-300"
-              onClick={() => setShowAddModal(true)}
-            >
-              +
-            </button>
           </div>
-          <TodoList todos={todos} delTodo={delTodo} updateTodo={updateTodo} />
+          <TodoList
+            todos={todos}
+            delTodo={delTodo}
+            updateTodo={updateTodo}
+            unnecessary = {true}
+          />
 
           {showAddModal && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">

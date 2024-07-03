@@ -1,6 +1,6 @@
 import DeadlineTodoItem from "./DeadlineTodoItem";
 
-function DeadlineTodoList({ todos, delTodo, updateTodo }) {
+function DeadlineTodoList({ todos, delTodo, updateTodo, unnecessary }) {
   return (
     <ul>
       {todos.map((todo) => {
@@ -10,6 +10,7 @@ function DeadlineTodoList({ todos, delTodo, updateTodo }) {
             todo={todo}
             delTodo={delTodo}
             updateTodo={updateTodo}
+            unnecessary={unnecessary}
           />
         );
       })}
