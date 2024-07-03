@@ -1,4 +1,3 @@
-// src/SignUp.js
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -31,16 +30,16 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-pink-50">
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
-        <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">
+        <h2 className="text-3xl font-bold text-center text-pink-700 mb-8">
           Sign Up
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-pink-700"
             >
               Email
             </label>
@@ -50,14 +49,14 @@ const SignUp = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="Enter your email"
             />
           </div>
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-pink-700"
             >
               Password
             </label>
@@ -67,14 +66,14 @@ const SignUp = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="Enter your password"
             />
           </div>
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-pink-700"
             >
               Confirm Password
             </label>
@@ -84,20 +83,20 @@ const SignUp = () => {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500"
               placeholder="Confirm your password"
             />
           </div>
           <button
             type="submit"
-            className="w-full px-4 py-2 bg-indigo-600 rounded-md shadow-sm text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full px-4 py-2 bg-pink-500 rounded-md shadow-sm text-white hover:bg-pink-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-pink-500"
           >
             SignUp
           </button>
           <div className="mt-4 text-center">
             <button
-              onClick={() => navigate("/login")} // 회원가입 페이지로 이동
-              className="text-indigo-600 w-full  px-4 py-2 border border-indigo-600 rounded-md shadow-sm hover:text-indigo-700"
+              onClick={() => navigate("/login")} // 로그인 페이지로 이동
+              className="text-pink-600 w-full px-4 py-2 border border-pink-600 rounded-md shadow-sm hover:text-white hover:bg-pink-600"
             >
               Login
             </button>
