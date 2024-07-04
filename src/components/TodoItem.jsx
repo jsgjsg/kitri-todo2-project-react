@@ -89,16 +89,19 @@ function TodoItem({ todo, delTodo, updateTodo, parentOptions, unnecessary }) {
               <h2 className="text-2xl font-semibold mb-4 text-center">
                 Todo Details
               </h2>
-              <button
-                className={
-                  fixOX
-                    ? "bg-red-600 text-white px-2 py-2 rounded-md mt-2 mr-2 hover:bg-white transition duration-300"
-                    : "bg-white text-red-600 px-2 py-2 rounded-md mt-2 mr-2 hover:bg-red-600 hover:text-white transition duration-300"
-                }
-                onClick={fixTodo}
-              >
-                📌
-              </button>
+              {!unnecessary &&
+                <button
+                  className={
+                    fixOX
+                      ? "bg-red-600 text-white px-2 py-2 rounded-md mt-2 mr-2 hover:bg-white transition duration-300"
+                      : "bg-white text-red-600 px-2 py-2 rounded-md mt-2 mr-2 hover:bg-red-600 hover:text-white transition duration-300"
+                  }
+                  onClick={fixTodo}
+                >
+                  📌
+                </button>
+              }
+              
             </div>
             <div className="space-y-4">
               <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
