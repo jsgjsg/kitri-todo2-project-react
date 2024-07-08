@@ -1,6 +1,7 @@
-# 🚨알럿-유(Alert-You)
+# 🚨투두-유(Todo-You)
 
-![Alert-You Logo 256](https://user-images.githubusercontent.com/93081720/202115376-796bca49-0ab7-4814-a631-ab1fea8f64cc.png)
+![main](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/4e5d0a3d-df2e-475e-92af-01decee1020d)
+
 
 <br>
 
