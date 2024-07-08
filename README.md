@@ -1,6 +1,7 @@
 # 📅투두-유(Todo-You)
 
-![main](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/4e5d0a3d-df2e-475e-92af-01decee1020d)
+![main](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/336c90bf-0991-4424-8ec2-954946c0a17b)
+
 
 
 <br>
