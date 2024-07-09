@@ -14,9 +14,9 @@ const SignUp = () => {
       alert("Passwords do not match");
       return;
     }
-
+    
     try {
-      const response = await axios.post("http://localhost:3000/api/auth/join", {
+      const response = await axios.post("http://ec2-43-201-61-216.ap-northeast-2.compute.amazonaws.com:3000/api/auth/join", {
         email,
         password,
       });
