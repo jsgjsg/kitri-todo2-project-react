@@ -110,8 +110,9 @@
 #### 깃과 지라
 | 깃                                                                                                                |지라|
 |------------------------------------------------------------------------------------------------------------------|---|
-| ![git](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/d5a11ed6-0af4-4479-8db4-f65f2cf77f6a)
- | ![jira](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/6781ed2b-6014-4e08-abad-cf341a4e8e40)|
+| ![git](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/2062e982-c8ab-4e88-860e-8c72fb200892)
+ |![jira](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/7ecf3153-8aed-4a9b-9a48-1c0578173788)
+ |
 
 
 
