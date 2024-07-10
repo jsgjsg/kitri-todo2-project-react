@@ -45,9 +45,6 @@
 
 ## 🔍프로젝트 정보
 
-### 🌼산출물
-
-
 ### 🛠기술 스택
 - Frontend: React, Redux, CSS
 - Backend: Node.js, Express
