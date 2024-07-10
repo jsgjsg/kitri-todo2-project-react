@@ -28,7 +28,7 @@
 
 개발 : 06.25 ~ 06.28 (4일)
 - Front : 프로젝트 환경 설정, 페이지 UI 구현, Todo리스트 및 달력 등 핵심 기능 구현
-- Back : 
+- Back : API 개발 및 수정, DB 구성, 배포 및 인프라 구축
 
 테스트 및 배포 : 06.28 ~ 06.29 (2일)
 - 통합 테스트 및 QA
@@ -39,7 +39,7 @@
 ## 🔍프로젝트 정보
 
 ### 🛠기술 스택
-- Frontend: React, Redux, CSS
+- Frontend: React, TailwindCSS
 - Backend: Node.js, Express
 - Database: MongoDB
 - Deployment: AWS
@@ -94,7 +94,8 @@
 
 #### excalidraw
 |화면설계서|
- ![excalidraw](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/704693f6-0561-4300-bc72-20a1a88a62ce)
+|-|
+| ![excalidraw](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/704693f6-0561-4300-bc72-20a1a88a62ce)|
 
 
 #### 깃과 지라
