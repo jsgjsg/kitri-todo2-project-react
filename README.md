@@ -1,4 +1,4 @@
-# 📅투두-유(Todo-You)
+![image](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/8e31620d-58b9-46e7-a6e5-b5c3a039cb16)# 📅투두-유(Todo-You)
 
 ![main](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/336c90bf-0991-4424-8ec2-954946c0a17b)
 
@@ -102,9 +102,9 @@
 | [이민욱]() |  |
 
 
-#### 노션
-| 데일리 스크럼 | 주간 회고 | 별명 위키                                                                                                           |
-|----|-------|-----------------------------------------------------------------------------------------------------------------|
+#### excalidraw
+| 화면설계서                                                                                                         |
+|![excalidraw](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/704693f6-0561-4300-bc72-20a1a88a62ce)|
 
 
 #### 깃과 지라
