@@ -103,9 +103,8 @@
 
 
 #### excalidraw
-|화면설계서 |
-||
-| ![excalidraw](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/704693f6-0561-4300-bc72-20a1a88a62ce)|
+|화면설계서|
+ ![excalidraw](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/704693f6-0561-4300-bc72-20a1a88a62ce)
 
 
 #### 깃과 지라
