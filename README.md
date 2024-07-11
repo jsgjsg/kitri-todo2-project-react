@@ -38,6 +38,11 @@
 
 ## 🔍프로젝트 정보
 
+### 협업 도구
+- Git
+- Jira
+- Excalidraw
+
 ### 🛠기술 스택
 - Frontend: React, TailwindCSS
 - Backend: Node.js, Express
