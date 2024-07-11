@@ -42,7 +42,7 @@
 - Frontend: React, TailwindCSS
 - Backend: Node.js, Express
 - Database: MongoDB
-- Deployment: AWS
+- Deployment: AWS S3, AWS EC2
 
 ![image](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/cf9cd165-7feb-4b89-a65b-2dfab76594cb)
 
