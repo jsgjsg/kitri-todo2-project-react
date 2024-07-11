@@ -44,6 +44,8 @@
 - Database: MongoDB
 - Deployment: AWS
 
+![image](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/cf9cd165-7feb-4b89-a65b-2dfab76594cb)
+
 <br>
 
 ## ⭐주요 기능
