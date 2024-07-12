@@ -39,11 +39,14 @@
 ## 🔍프로젝트 정보
 
 ### 🔩협업 도구
-- Git
-- GitHub
-- SourceTree
-- Jira
-- Excalidraw
+- 버전 관리
+  - Git
+  - GitHub
+  - SourceTree
+- 일정 관리
+  - Jira
+- 화면 및 흐름 설계
+  - Excalidraw
 
 ### 🛠기술 스택
 - Frontend: React, TailwindCSS
