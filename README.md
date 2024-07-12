@@ -1,7 +1,7 @@
 # 📅투두-유(Todo-You)
 
 ![image](https://github.com/jsgjsg/kitri-todo2-project-react/assets/128575030/edba7ec0-69c5-44f4-ae6c-3869ef8b7e7c)
-<a href="http://ast07-todo-react.s3-website.ap-northeast-2.amazonaws.com/login" target="__blank">링크</a>
+<a href="http://ast07-todo-react.s3-website.ap-northeast-2.amazonaws.com/login" target=__blank>링크</a>
 
 <br>
 
