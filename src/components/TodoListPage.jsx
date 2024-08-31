@@ -18,7 +18,7 @@ const TodoListPage = ({ selectedDate }) => {
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://ec2-43-201-61-216.ap-northeast-2.compute.amazonaws.com:3000", // Express 서버의 주소
+      baseURL: "http://127.0.0.1:3000", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const TodoListPage = ({ selectedDate }) => {
     if (!accessToken) navigate("/login");
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://ec2-43-201-61-216.ap-northeast-2.compute.amazonaws.com:3000", // Express 서버의 주소
+      baseURL: "http://127.0.0.1:3000", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ const TodoListPage = ({ selectedDate }) => {
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://ec2-43-201-61-216.ap-northeast-2.compute.amazonaws.com:3000/api/todos", // Express 서버의 주소
+      baseURL: "http://127.0.0.1:3000/api/todos", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
         "Content-Type": "application/json",
@@ -105,7 +105,7 @@ const TodoListPage = ({ selectedDate }) => {
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://ec2-43-201-61-216.ap-northeast-2.compute.amazonaws.com:3000/api/todos", // Express 서버의 주소
+      baseURL: "http://127.0.0.1:3000/api/todos", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
       },
@@ -131,7 +131,7 @@ const TodoListPage = ({ selectedDate }) => {
 
     // Axios 인스턴스 생성 및 기본 설정
     const axiosInstance = axios.create({
-      baseURL: "http://ec2-43-201-61-216.ap-northeast-2.compute.amazonaws.com:3000", // Express 서버의 주소
+      baseURL: "http://127.0.0.1:3000", // Express 서버의 주소
       headers: {
         Authorization: `Bearer ${accessToken}`, // 액세스 토큰을 Authorization 헤더에 포함
         "Content-Type": "application/json",
